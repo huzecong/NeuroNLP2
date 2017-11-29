@@ -1,5 +1,7 @@
 __author__ = 'max'
 
+import os
+
 
 class CoNLL03Writer(object):
     def __init__(self, word_alphabet, char_alphabet, pos_alphabet, chunk_alphabet, ner_alphabet):
@@ -11,6 +13,9 @@ class CoNLL03Writer(object):
         self.__ner_alphabet = ner_alphabet
 
     def start(self, file_path):
+        file_dir = os.path.split(file_path)[0]
+        if not os.path.exists(file_dir):
+            os.makedirs(file_dir)
         self.__source_file = open(file_path, 'w')
 
     def close(self):
@@ -38,6 +43,9 @@ class CoNLLXWriter(object):
         self.__type_alphabet = type_alphabet
 
     def start(self, file_path):
+        file_dir = os.path.split(file_path)[0]
+        if not os.path.exists(file_dir):
+            os.makedirs(file_dir)
         self.__source_file = open(file_path, 'w')
 
     def close(self):
