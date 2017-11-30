@@ -61,6 +61,7 @@ def main():
     args_parser.add_argument('--train')  # "data/POS-penn/wsj/split1/wsj1.train.original"
     args_parser.add_argument('--dev')  # "data/POS-penn/wsj/split1/wsj1.dev.original"
     args_parser.add_argument('--test')  # "data/POS-penn/wsj/split1/wsj1.test.original"
+    args_parser.add_argument('--data_name', type=str, default=None)
 
     args = args_parser.parse_args()
 
@@ -104,7 +105,7 @@ def main():
         char_dict, char_dim = utils.load_embedding_dict(char_embedding, char_path)
     logger.info("Creating Alphabets")
     word_alphabet, char_alphabet, pos_alphabet, \
-    type_alphabet = conllx_data.create_alphabets("data/alphabets/mst/", train_path,
+    type_alphabet = conllx_data.create_alphabets("data/alphabets/mst/" + args.data_name, train_path,
                                                  data_paths=[dev_path, test_path],
                                                  max_vocabulary_size=50000, embedd_dict=word_dict)
 
