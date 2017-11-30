@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+cat runs/japanese.sh
 CUDA_VISIBLE_DEVICES=1 \
 python examples/GraphParser.py --mode FastLSTM --num_epochs 200 --batch_size 32 --hidden_size 400 --num_layers 3 \
  --pos_dim 100 --char_dim 50 --num_filters 100 --arc_space 500 --type_space 100 \
