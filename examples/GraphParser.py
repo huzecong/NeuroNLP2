@@ -65,6 +65,8 @@ def main():
 
     args = args_parser.parse_args()
 
+    print("*** Model UID: %s ***" % uid)
+
     logger = get_logger("GraphParser")
 
     mode = args.mode
@@ -305,6 +307,8 @@ def main():
         pred_writer.start(pred_filename)
         gold_filename = 'tmp/%sgold_dev%d' % (str(uid), epoch)
         gold_writer.start(gold_filename)
+
+        print('[%s] Epoch %d complete' % (time.strftime("%Y-%m-%d %H:%M:%S"), epoch))
 
         dev_ucorr = 0.0
         dev_lcorr = 0.0
