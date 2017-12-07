@@ -6,8 +6,9 @@ python examples/GraphParser.py --mode FastLSTM --num_epochs 200 --batch_size 32 
  --objective cross_entropy --learning_rate 0.02 --decay_rate 0.05 --schedule 1 --gamma 0.0 \
  --p_in 0.33 --p_rnn 0.33 0.33 --p_out 0.33 --unk_replace 0.5 \
  --decode mst \
- --word_embedding sskip --word_path "data/sskip/sskip.chn.50.gz" --char_embedding polyglot --char_path "data/polyglot/polyglot-zh_char.pkl" \
- --train "data/conll2006/Chinese/chinese_sinica_train.conll" \
- --dev "data/conll2006/Chinese/chinese_sinica_dev.conll" \
- --test "data/conll2006/Chinese/chinese_sinica_test.conll" \
- --data_name "chinese_conll2006"
+ --word_embedding sskip --word_path "data/sskip/sskip.ger.64.gz" --char_embedding random \
+ --punctuation '$.' '$,' '$(' \
+ --train "data/GER/unproj.ge.train.conll" \
+ --dev "data/GER/unproj.ge.dev.conll" \
+ --test "data/GER/unproj.ge.test.conll" \
+ --data_name "german_conll2009"

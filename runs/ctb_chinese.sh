@@ -7,7 +7,8 @@ python examples/GraphParser.py --mode FastLSTM --num_epochs 200 --batch_size 32 
  --p_in 0.33 --p_rnn 0.33 0.33 --p_out 0.33 --unk_replace 0.5 \
  --decode mst \
  --word_embedding sskip --word_path "data/sskip/sskip.chn.50.gz" --char_embedding polyglot --char_path "data/polyglot/polyglot-zh_char.pkl" \
- --train "data/conll2006/Chinese/chinese_sinica_train.conll" \
- --dev "data/conll2006/Chinese/chinese_sinica_dev.conll" \
- --test "data/conll2006/Chinese/chinese_sinica_test.conll" \
- --data_name "chinese_conll2006"
+ --punctuation 'PU' \
+ --train "data/CTB-Malt2Penn/ctb.train.conll" \
+ --dev "data/CTB-Malt2Penn/ctb.dev.conll" \
+ --test "data/CTB-Malt2Penn/ctb.test.conll" \
+ --data_name "chinese_ctb"
