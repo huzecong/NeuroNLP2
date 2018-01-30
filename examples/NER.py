@@ -22,12 +22,12 @@ from neuronlp2.io import get_logger, conll03_data, CoNLL03Writer
 from neuronlp2.models import BiRecurrentConv, BiVarRecurrentConv
 from neuronlp2 import utils
 
-uid = uuid.uuid4().get_hex()[:6]
+uid = uuid.uuid4().hex[:6]
 
 
 def evaluate(output_file):
     score_file = "tmp/score_%s" % str(uid)
-    os.system("examples/eval/conlleval.v2 < %s > %s" % (output_file, score_file))
+    os.system("examples/eval/conll03eval.v2 < %s > %s" % (output_file, score_file))
     with open(score_file, 'r') as fin:
         fin.readline()
         line = fin.readline()
@@ -55,8 +55,7 @@ def main():
     parser.add_argument('--p', type=float, default=0.5, help='dropout rate')
     parser.add_argument('--schedule', type=int, help='schedule for learning rate decay')
     parser.add_argument('--unk_replace', type=float, default=0., help='The rate to replace a singleton word with UNK')
-    parser.add_argument('--embedding', choices=['glove', 'senna', 'sskip', 'polyglot'], help='Embedding for words',
-                        required=True)
+    parser.add_argument('--embedding', choices=['glove', 'senna', 'sskip', 'polyglot'], help='Embedding for words', required=True)
     parser.add_argument('--embedding_dict', help='path for embedding dict')
     parser.add_argument('--train')  # "data/POS-penn/wsj/split1/wsj1.train.original"
     parser.add_argument('--dev')  # "data/POS-penn/wsj/split1/wsj1.dev.original"

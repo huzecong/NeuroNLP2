@@ -23,7 +23,7 @@ from neuronlp2 import utils
 from neuronlp2.io import CoNLLXWriter
 from neuronlp2.tasks import parser
 
-uid = uuid.uuid4().get_hex()[:6]
+uid = uuid.uuid4().hex[:6]
 
 
 def main():
@@ -325,8 +325,7 @@ def main():
         dev_total_inst = 0.0
         for batch in conllx_data.iterate_batch_variable(data_dev, batch_size):
             word, char, pos, heads, types, masks, lengths = batch
-            heads_pred, types_pred = decode(word, char, pos, mask=masks, length=lengths,
-                                            leading_symbolic=conllx_data.NUM_SYMBOLIC_TAGS)
+            heads_pred, types_pred = decode(word, char, pos, mask=masks, length=lengths, leading_symbolic=conllx_data.NUM_SYMBOLIC_TAGS)
             word = word.data.cpu().numpy()
             pos = pos.data.cpu().numpy()
             lengths = lengths.cpu().numpy()
@@ -336,9 +335,7 @@ def main():
             pred_writer.write(word, pos, heads_pred, types_pred, lengths, symbolic_root=True)
             gold_writer.write(word, pos, heads, types, lengths, symbolic_root=True)
 
-            stats, stats_nopunc, stats_root, num_inst = parser.eval(word, pos, heads_pred, types_pred, heads, types,
-                                                                    word_alphabet, pos_alphabet, lengths,
-                                                                    punct_set=punct_set, symbolic_root=True)
+            stats, stats_nopunc, stats_root, num_inst = parser.eval(word, pos, heads_pred, types_pred, heads, types, word_alphabet, pos_alphabet, lengths, punct_set=punct_set, symbolic_root=True)
             ucorr, lcorr, total, ucm, lcm = stats
             ucorr_nopunc, lcorr_nopunc, total_nopunc, ucm_nopunc, lcm_nopunc = stats_nopunc
             corr_root, total_root = stats_root
@@ -409,8 +406,7 @@ def main():
             test_total_root = 0
             for batch in conllx_data.iterate_batch_variable(data_test, batch_size):
                 word, char, pos, heads, types, masks, lengths = batch
-                heads_pred, types_pred = decode(word, char, pos, mask=masks, length=lengths,
-                                                leading_symbolic=conllx_data.NUM_SYMBOLIC_TAGS)
+                heads_pred, types_pred = decode(word, char, pos, mask=masks, length=lengths, leading_symbolic=conllx_data.NUM_SYMBOLIC_TAGS)
                 word = word.data.cpu().numpy()
                 pos = pos.data.cpu().numpy()
                 lengths = lengths.cpu().numpy()
@@ -420,9 +416,7 @@ def main():
                 pred_writer.write(word, pos, heads_pred, types_pred, lengths, symbolic_root=True)
                 gold_writer.write(word, pos, heads, types, lengths, symbolic_root=True)
 
-                stats, stats_nopunc, stats_root, num_inst = parser.eval(word, pos, heads_pred, types_pred, heads, types,
-                                                                        word_alphabet, pos_alphabet, lengths,
-                                                                        punct_set=punct_set, symbolic_root=True)
+                stats, stats_nopunc, stats_root, num_inst = parser.eval(word, pos, heads_pred, types_pred, heads, types, word_alphabet, pos_alphabet, lengths, punct_set=punct_set, symbolic_root=True)
                 ucorr, lcorr, total, ucm, lcm = stats
                 ucorr_nopunc, lcorr_nopunc, total_nopunc, ucm_nopunc, lcm_nopunc = stats_nopunc
                 corr_root, total_root = stats_root
@@ -478,7 +472,7 @@ def main():
             if epoch < adam_epochs:
                 opt = 'adam'
                 lr = adam_rate / (1.0 + epoch * decay_rate)
-                optim = Adam(network.parameters(), lr=lr, betas=(0.9, 0.9), weight_decay=gamma)
+                optim = Adam(network.parameters(), lr=lr, betas=betas, weight_decay=gamma)
             else:
                 opt = 'sgd'
                 lr = learning_rate / (1.0 + (epoch - adam_epochs) * decay_rate)
