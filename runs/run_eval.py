@@ -2,6 +2,7 @@
 import os
 import re
 import shutil
+import sys
 from subprocess import Popen, PIPE
 
 """
@@ -14,7 +15,10 @@ Note: The default CoNLL 2006 eval script needs to be changed!
 """
 
 
-folders = os.listdir('log')
+if len(sys.argv) > 1:
+    folders = sys.argv[1:]
+else:
+    folders = os.listdir('log')
 for lang in sorted(folders):
     lang_path = os.path.join('log', lang)
     files = os.listdir(lang_path)
