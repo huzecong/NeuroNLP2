@@ -11,4 +11,4 @@ CUDA_VISIBLE_DEVICES=2 $PYTHON examples/StackPointerParser.py --mode FastLSTM --
  --train "data/conll2006/Japanese/japanese_verbmobil_train.conll" \
  --dev "data/conll2006/Japanese/japanese_verbmobil_dev.conll" \
  --test "data/conll2006/Japanese/japanese_verbmobil_test.conll" \
- --model_path "models/parsing/stack_ptr/" --model_name 'network.pt.japanese'
+ --model_path "models/parsing/stack_ptr/japanese/" --model_name 'network.pt.japanese'

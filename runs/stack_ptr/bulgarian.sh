@@ -11,4 +11,4 @@ CUDA_VISIBLE_DEVICES=2 $PYTHON examples/StackPointerParser.py --mode FastLSTM --
  --train "data/conll2006/Bulgarian/bulgarian_bultreebank_train.conll" \
  --dev "data/conll2006/Bulgarian/bulgarian_bultreebank_dev.conll" \
  --test "data/conll2006/Bulgarian/bulgarian_bultreebank_test.conll" \
- --model_path "models/parsing/stack_ptr/" --model_name 'network.pt.bulgarian'
+ --model_path "models/parsing/stack_ptr/bulgarian/" --model_name 'network.pt.bulgarian'

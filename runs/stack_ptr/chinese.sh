@@ -10,4 +10,4 @@ CUDA_VISIBLE_DEVICES=2 $PYTHON examples/StackPointerParser.py --mode FastLSTM --
  --train "data/conll2006/Chinese/chinese_sinica_train.conll" \
  --dev "data/conll2006/Chinese/chinese_sinica_dev.conll" \
  --test "data/conll2006/Chinese/chinese_sinica_test.conll" \
- --model_path "models/parsing/stack_ptr/" --model_name 'network.pt.chinese'
+ --model_path "models/parsing/stack_ptr/chinese/" --model_name 'network.pt.chinese'

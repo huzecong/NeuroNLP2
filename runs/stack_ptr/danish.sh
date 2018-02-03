@@ -11,4 +11,4 @@ CUDA_VISIBLE_DEVICES=2 $PYTHON examples/StackPointerParser.py --mode FastLSTM --
  --train "data/conll2006/Danish/danish_ddt_train.conll" \
  --dev "data/conll2006/Danish/danish_ddt_dev.conll" \
  --test "data/conll2006/Danish/danish_ddt_test.conll" \
- --model_path "models/parsing/stack_ptr/" --model_name 'network.pt.danish'
+ --model_path "models/parsing/stack_ptr/danish/" --model_name 'network.pt.danish'
