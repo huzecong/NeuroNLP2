@@ -8,6 +8,9 @@ Implementation of Bi-directional LSTM-CNNs-TreeCRF model for Graph-based depende
 import sys
 import os
 
+from subprocess import Popen, PIPE
+import re
+
 sys.path.append(".")
 sys.path.append("..")
 
@@ -74,7 +77,7 @@ def main():
     data_test = conllx_stacked_data.read_stacked_data_to_variable(test_path, word_alphabet, char_alphabet, pos_alphabet, type_alphabet,
                                                                   use_gpu=use_gpu, volatile=True, prior_order=prior_order)
 
-    logger.info('use gpu: %s, beam: %d, ordered: %s' % (use_gpu, beam, ordered))
+    logger.info('use gpu: %s, ordered: %s' % (use_gpu, ordered))
     punct_set = None
     punctuation = args.punctuation
     if punctuation is not None:
@@ -230,7 +233,7 @@ def main():
     if not os.path.exists(lang_path):
         os.makedirs(lang_path)
     run_id = 1
-    while os.path.exists(os.path.join(lang_path, 'run%d_beam1.gold' % run_id)):
+    while os.path.exists(os.path.join(lang_path, 'run%d_beam10.gold' % run_id)):
         run_id += 1
     print('%s (run %d)' % (language, run_id))
     for beam in [1, 5, 10]:
@@ -245,7 +248,7 @@ def main():
         # print err
         real_las = re.search(r"Labeled   attachment score:.+?([0-9\.]+) %", output).group(1)
         real_uas = re.search(r"Unlabeled attachment score:.+?([0-9\.]+) %", output).group(1)
-        print "UAS: %s, LAS: %s" % (real_uas, real_las)
+        print("UAS: %s, LAS: %s" % (real_uas, real_las))
         with open(os.path.join(lang_path, basename + '.analysis'), 'w') as f:
             f.write(output)
 
