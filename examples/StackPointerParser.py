@@ -74,6 +74,8 @@ def main():
 
     args = args_parser.parse_args()
 
+    print("*** Model UID: %s ***" % uid)
+
     logger = get_logger("PtrParser")
 
     mode = args.mode
