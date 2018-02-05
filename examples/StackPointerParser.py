@@ -532,8 +532,10 @@ def main():
         print('============================================================================================================================')
 
         if decay == max_decay:
+            print('Max decay reached, stopping.')
             break
 
 
 if __name__ == '__main__':
     main()
+    print('End of training.')
