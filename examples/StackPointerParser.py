@@ -127,8 +127,8 @@ def main():
     char_dim = args.char_dim
     if char_embedding != 'random':
         char_dict, char_dim = utils.load_embedding_dict(char_embedding, char_path)
-    logger.info("Creating Alphabets")
 
+    logger.info("Creating Alphabets")
     alphabet_path = os.path.join(model_path, 'alphabets/')
     model_name = os.path.join(model_path, model_name)
     word_alphabet, char_alphabet, pos_alphabet, type_alphabet = conllx_stacked_data.create_alphabets(alphabet_path, train_path, data_paths=[dev_path, test_path],
@@ -270,7 +270,8 @@ def main():
 
     patient = 0
     decay = 0
-    max_decay = 10
+    max_decay = 9
+    double_schedule_decay = 5
     for epoch in range(1, num_epochs + 1):
         print('Epoch %d (%s, optim: %s, learning rate=%.6f, eps=%.1e, decay rate=%.2f (schedule=%d, patient=%d, decay=%d)): ' % (epoch, mode, opt, lr, eps, decay_rate, schedule, patient, decay))
         train_err_arc_leaf = 0.
@@ -420,7 +421,7 @@ def main():
             dev_lcorr_nopunc * 100 / dev_total_nopunc, dev_ucomlpete_nopunc * 100 / dev_total_inst, dev_lcomplete_nopunc * 100 / dev_total_inst))
         print('Root: corr: %d, total: %d, acc: %.2f%%' % (dev_root_corr, dev_total_root, dev_root_corr * 100 / dev_total_root))
 
-        if dev_ucorrect_nopunc <= dev_ucorr_nopunc:
+        if dev_ucorrect_nopunc < dev_ucorr_nopunc or (dev_ucorrect_nopunc == dev_ucorr_nopunc and dev_lcorrect_nopunc < dev_lcorr_nopunc):
             dev_ucorrect_nopunc = dev_ucorr_nopunc
             dev_lcorrect_nopunc = dev_lcorr_nopunc
             dev_ucomlpete_match_nopunc = dev_ucomlpete_nopunc
@@ -496,16 +497,16 @@ def main():
             pred_writer.close()
             gold_writer.close()
         else:
-            if patient < schedule:
-                patient += 1
-            else:
+            if dev_ucorr_nopunc * 100 / dev_total_nopunc < dev_ucorrect_nopunc * 100 / dev_total_nopunc - 5 or patient >= schedule:
                 network = torch.load(model_name)
                 lr = lr * decay_rate
                 optim = generate_optimizer(opt, lr, network.parameters())
                 patient = 0
                 decay += 1
-                if decay % 3 == 0:
+                if decay % double_schedule_decay == 0:
                     schedule *= 2
+            else:
+                patient += 1
 
         print('----------------------------------------------------------------------------------------------------------------------------')
         print('best dev  W. Punct: ucorr: %d, lcorr: %d, total: %d, uas: %.2f%%, las: %.2f%%, ucm: %.2f%%, lcm: %.2f%% (epoch: %d)' % (
