@@ -11,4 +11,4 @@ CUDA_VISIBLE_DEVICES=2 $PYTHON examples/StackPointerParser.py --mode FastLSTM --
  --train "data/conll2006/Arabic/arabic_PADT_train.conll" \
  --dev "data/conll2006/Arabic/arabic_PADT_dev.conll" \
  --test "data/conll2006/Arabic/arabic_PADT_test.conll" \
- --model_path "models/parsing/stack_ptr/arabic/" --model_name 'network.pt.arabic'
+ --model_path "models/parsing/stack_ptr/arabic_gs/" --model_name 'network.pt.arabic_gs'
